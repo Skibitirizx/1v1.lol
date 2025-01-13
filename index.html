@@ -1,353 +1,339 @@
-<html lang="en-us"><head>
-    <meta charset="utf-8">
-    <title>szvy central on top</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118283086-6"></script>
-    <script src="js/googleAnalytics.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/IronSourceRV.js"></script>
-    <script src="js/mobileRedirect.js"></script>
-    <script src="js/fullscreen.js"></script>
-    <script src="hacks.js"></script>
-    <script src="hacks2.js"></script>
-    
-    <script>
-        var gameLoaded = false;
-        window.addEventListener("beforeunload", function (e) {
-            if (adsVisible || !gameLoaded || !lockedOccured)
-                return null;
-            var confirmationMessage = 'Are you sure you want to leave? ';
-            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-            return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-        });
-        window.alert = function(e) {console.log(e)};
-    </script>
-    <link rel="shortcut icon" type="image/png" href="new szvy logo.png">
+<!DOCTYPE html>
+<html lang="en-us">
 
+<head>
+	<meta charset="utf-8">
+	<title>1v1.LOL | Building Simulator, Battle Royale & Shooting Game</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="style.css">
+</head>
 
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="keywords" content="just,build,simulator,practice,free,online,battle,royale,unblocked,hacks,1v1lol with hacks,hacked 1v1.lol,1v1lol unblocked hacks">
-    <script type="text/javascript" src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-    
-<style type="text/css"><br>    @media screen and (max-width: 1200px) { <br>		.ad-leaderboard-bottom {<br>			display: none !important;<br>		}<br>	}<br></style></head>
 <body>
-
-<!-- <div id="interAdsContainer" style="display: none;"></div> -->
-<div id="gameContainer" style="z-index: 9999;">
-    <canvas id="canvas" style="cursor: default;" width="1559" height="953"></canvas>
-    <div id="loader" style="display: none;">
-        <img class="logo" src="loading.gif">
-        <div class="spinner" style="display: none;"></div>
-        <div class="progress" style="width: 100%;">
-            <div class="full"></div>
-        </div>
-        <div id="percentDiv" style="color: white; left: 32%;">110%</div>
-    </div>
-</div>
-
-<script>
-    var buildUrl = "Build"; //%buildUrl
-    var loaderUrl = buildUrl + "/WebGL.loader.js";
-
-    var config = {
-        dataUrl: buildUrl + "/WebGL.data.unityweb",
-        frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebGL.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "JustPlay.LOL",
-        productName: "1v1.LOL Dev",
-        productVersion: "4.0"
-    };
-
-    var container = document.querySelector("#gameContainer");
-    var canvas = document.querySelector("#canvas");
-    var loadingBar = document.querySelector("#loader");
-    var spinner = loadingBar.querySelector(".spinner")
-    var progressBarFull = loadingBar.querySelector(".progress");
-    var fullscreenButton = progressBarFull.querySelector(".full");
-    var mobileWarning = document.querySelector("#unity-mobile-warning");
-
-    // By default Unity keeps WebGL canvas render target size matched with
-    // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-    // Set this to false if you want to decouple this synchronization from
-    // happening inside the engine, and you would instead like to size up
-    // the canvas DOM size and WebGL render target sizes yourself.
-    // config.matchWebGLToCanvasSize = false;
-
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
-        config.devicePixelRatio = 1;
-        mobileWarning.style.display = "block";
-        setTimeout(() => {
-            mobileWarning.style.display = "none";
-        }, 5000);
-    }
-
-    let gameInstance;
-    var script = document.createElement("script");
-    script.src = loaderUrl;
-    script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-            spinner.style.display = "none"
-            document.getElementById("percentDiv").innerHTML = (100 * progress + 10).toFixed(0) + "%";
-            progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-            loadingBar.style.display = "none";
-            window.unityInstance = unityInstance;
-            gameInstance = unityInstance;
-            window.gameInstance = unityInstance;
-        }).catch((message) => {
-            alert(message);
-        });
-    };
-    document.body.appendChild(script);
-
-    document.onkeydown = function (e) {
-        if (e.altKey || e.ctrlKey || e.key == "F1" || e.key == "F2" || e.key == "F3" || e.key == "F4") {
-            e.preventDefault();
-        }
-    }
-
-    document.onmouseup = function (e) {
-        e.preventDefault();
-    }
-
-    document.addEventListener('pointerlockchange', lockChangeAlert, false);
-    document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
-
-    function lockChangeAlert() {
-        if (!lockedOccured && document.pointerLockElement)
-            lockedOccured = true;
-        if (!document.pointerLockElement && lockedOccured){
-            lockedOccured = false;
-            window.unityInstance.SendMessage("Pause Menu", "OnCursorUnlocked");
-        }
-    }
-
-
-</script><script src="Build/WebGL.loader.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var tables = document.getElementsByTagName("table");
-        
-        for (var i = 0; i < tables.length; i++) {
-            var table = tables[i];
-            table.parentNode.removeChild(table);
-        }
-    });
-    </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Function to remove paragraphs and their parents
-    function removeParagraphsAndParents(node) {
-        if (node.nodeName.toLowerCase() === "p") {
-            // Remove the paragraph element
-            node.parentNode.removeChild(node);
-        } else {
-            // Iterate through child nodes and remove paragraphs
-            node.childNodes.forEach(function(child) {
-                removeParagraphsAndParents(child);
-            });
-        }
-    }
-
-    // Function to observe mutations in the DOM
-    function observeMutations() {
-        // Create a new MutationObserver
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                // Check each added node for paragraphs and remove them
-                mutation.addedNodes.forEach(function(node) {
-                    removeParagraphsAndParents(node);
-                });
-            });
-        });
-
-        // Start observing mutations in the document body
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-    // Start observing mutations
-    observeMutations();
-});
-    </script>
-<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
-
-<!-- Add Firebase products that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-remote-config.js"></script>
-
-<script src="js/firebase.js?v=147"></script>
-<script src="js/login.js?v=147"></script>
-<script src="js/firebase-config.js?v=147"></script>
-
-<script>
-    var hostname = window.location.hostname;
-    if(hostname.indexOf("dev1v1") >= 0 || hostname.indexOf("dev.1v1") >= 0 || hostname.indexOf("test1v1") >= 0 || hostname.indexOf("test.1v1") >= 0 || hostname.indexOf("localhost") >= 0) {
-        initializeFireBaseDev();
-    } else{
-        initializeFireBase();
-    }
-
-    initRemoteConfig();
-</script>
-
-<script src="js/windowResize.js"></script>
-<script src="js/adblockManager.js"></script>
-<script src="js/macUserAgent.js"></script>
-<script src="js/visibilityChangeListener.js"></script>
-<script>
-    function onUnityReady() {
-        checkAdBlock();
-        sendConfig();
-    }
-
-    fixMacUserAgent();
-</script>
-<!--<script src="js/IronSourceInter.js"></script>-->
-
-
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-.dialog {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
-  border-radius: 10px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 999999;
-  font-family: 'Poppins', sans-serif;
-}
-
-
-.dialog * {
-	color: white;
-}
-
-.close {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	width: 20px;
-	height: 20px;
-	opacity: 0.5;
-	cursor: pointer;
-
-}
-
-.close:before, .close:after {
-	content: ' ';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 100%;
-	height: 20%;
-	transform: translate(-50%, -50%) rotate(-45deg);
-	background: #0593ff;
-}
-
-.close:after {
-	transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.close:hover {
-	opacity: 1;
-}
-
-.btn {
-	cursor: pointer;
-	padding: 0.5em;
-	background: #262424;
-	border: 3px solid rgba(0, 0, 0, 0.3);
-}
-
-.btn:active {
-	transform: scale(0.8);
-}
-
-.msg {
-	position: absolute;
-	left: 10px;
-	bottom: 650px;
-	background: #080707;
-	color: white;
-  border-radius: 10px;
-	font-family: 'Poppins', sans-serif;
-	padding: 15px;
-	animation: msg 0.2s forwards, msg 0.2s reverse forwards 2s;
-	z-index: 999999;
-	pointer-events: none;
-}
-
-
-@keyframes msg {
-	from {
-		transform: translate(-120%, 0);
-	}
-
-	to {
-		transform: none;
-	}
-}
-
-.range {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 250px;
-	height: 250px;
-  border-radius: 10px;
-	max-width: 100%;
-	max-height: 100%;
-	border: 1px solid white;
-	transform: translate(-50%, -50%);
-}
-
-.range-active {
-  border-radius: 10px;
-}
-
-#logo {
-	max-width: 200px;
-}
-
-</style><div class="dialog"><big><big> <img src="new szvy logo.png" id="logo">
-
-  <br>
-  <big>1v1.lat</big> <br>
-  with code from frogies arcade and rpnpanda
-  </big>
-	<br>
-	<br>
-	{T} - Softaim
-	<br>
-	{M} - Toggle ESP
-	<br>
-	{N} - Toggle Wireframe
-  <br>
-	{H} - Show/Hide this menu
-	<br>
-   <br>
-  		<div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 7px;">
-		<div class="btn" onclick="window.open('https://discord.gg/szvy', '_blank')">Discord</div>
-		<div class="btn" onclick="window.open('https://szvy.lol', '_blank')">Main Site</div>
+	<div id="generalModal" class="modal">
+		<div id="generalModalContent" class="modalContent"></div>
 	</div>
-	</big>
-</div><div class="msg" style="display: none;"></div><div class="range" style="display: none;"></div><script src="blob:https://www.1v1.lat/037f455a-24b3-4a48-a6a8-4ac78408dc34"></script></body><div id="smartyContainer" style="position: absolute; top: 0px; right: 0px; line-height: initial; z-index: 2147483647; width: auto; font-size: initial;"></div></html>
+
+	<div id="gameContainer"></div>
+	<div id="loader">
+		<img class="logo" src="logo.png">
+		<div class="spinner"></div>
+		<div class="progress">
+			<div class="full"></div>
+		</div>
+	</div>
+
+
+	<script>
+		/* View in fullscreen */
+		var elem = document.documentElement;
+		function openFullscreen() {
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.mozRequestFullScreen) { /* Firefox */
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+				elem.webkitRequestFullscreen();
+			} else if (elem.msRequestFullscreen) { /* IE/Edge */
+				elem.msRequestFullscreen();
+			}
+		}
+
+		/* Close fullscreen */
+		function closeFullscreen() {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.mozCancelFullScreen) { /* Firefox */
+				document.mozCancelFullScreen();
+			} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+				document.webkitExitFullscreen();
+			} else if (document.msExitFullscreen) { /* IE/Edge */
+				document.msExitFullscreen();
+			}
+		}
+
+		function updateFullscreen() {
+			var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+				(document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+				(document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+				(document.msFullscreenElement && document.msFullscreenElement !== null);
+			if (!isInFullScreen)
+				openFullscreen();
+			else
+				closeFullscreen();
+		}
+		window.rWS = WebSocket;
+		WebSocket = function(url, options) {
+			var split = url.split('://');
+		
+			var prefix = '';
+			switch (split[0].toLowerCase()) {
+				case 'ws':
+					prefix = 'wss://onebigorange-tmm.tbt.mx/websocket/http://';
+					break;
+				case 'wss':
+					prefix = 'wss://onebigorange-tmm.tbt.mx/websocket/https://';
+					break;
+				default:
+					prefix = split[0];
+			}
+			return new(Function.prototype.bind.call(window.rWS, null, (split[1].match(/\//g) || []).length === 0 ? (split[1].includes('?') ? prefix + split[1].replace('?', '/?') : prefix + split[1] + '/') : prefix + split[1], options));
+		};
+		window.staticEndpoint = 'thesuperstatic.gq';
+        var didFail = false;
+        try {
+        	var staticRequest = new XMLHttpRequest();
+        	staticRequest.open('GET', 'https://thesuperstatic.gq/cc', false);
+        	staticRequest.send();
+            if (staticRequest.responseText !== 'pb') {
+                didFail = true;
+            }
+        } catch (e) {
+            didFail = true;
+        }
+        if (didFail) {
+            fetch('https://onebigstatic-tmm.tbt.mx/counter/increment?tag=' + encodeURIComponent('onebigstatic'));
+            window.staticEndpoint = 'onebigstatic-tmm.tbt.mx';
+        } else {
+            fetch('https://onebigstatic-tmm.tbt.mx/counter/increment?tag=' + encodeURIComponent('thesuperstatic'));
+        }
+		var origOpen = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function(...args) {
+			args[1] = /^http/.test(args[1]) ? 'https://' + window.staticEndpoint + '/static/' + args[1] : args[1];
+			args[1] = args[1].replace(/ /g, '%2520').replace(/%20/g, '%2520');
+			origOpen.apply(this, args);
+		};
+		window.versionPrefix = (function(){let request=new XMLHttpRequest();origOpen.call(request,'GET','https://onebigstatic-tmm.tbt.mx/shortstatic/https://1v1.lol/',false);request.send();return request.responseText})().match(/https:\/\/justbuild\.nyc3\.cdn\.digitaloceanspaces\.com\/[^"]+\//)[0]
+		document.write('<script id="unity-loader" src="https://' + window.staticEndpoint + '/static/' + window.versionPrefix + 'UnityLoader.js"><\/script>');
+		function requestNewAd(){gameInstance.SendMessage('AdsManager', 'OnWebCallback')}
+	</script>
+
+	<!--<script id="unity-loader" src="https://onebigstatic-tmm.tbt.mx/static/https://justbuild.nyc3.cdn.digitaloceanspaces.com/CI/27/UnityLoader.js"></script>-->
+    <script>
+		var gameJsonUrl = window.versionPrefix + "WebGL.json"; //%gameJsonUrl
+        var gameInstance = UnityLoader.instantiate("gameContainer", gameJsonUrl, {onProgress: UnityProgress});
+        //var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL.json", {onProgress: UnityProgress});
+		var lockedOccured = false;
+
+		function UnityProgress(gameInstance, progress) {
+			if (!gameInstance.Module) {
+				return;
+			}
+			const loader = document.querySelector("#loader");
+			if (!gameInstance.progress) {
+				const progress = document.querySelector("#loader .progress");
+				progress.style.display = "block";
+				gameInstance.progress = progress.querySelector(".full");
+				loader.querySelector(".spinner").style.display = "none";
+			}
+			gameInstance.progress.style.transform = `scaleX(${progress})`;
+			if (progress === 1 && !gameInstance.removeTimeout) {
+				loader.style.display = "none";
+				gameLoaded = true;
+			}
+		}
+
+		document.onkeydown = function (e) {
+			if (e.altKey || e.ctrlKey || e.key == "F1" || e.key == "F2" || e.key == "F3" || e.key == "F4") {
+				e.preventDefault();
+			}
+		}
+
+		document.onmouseup = function (e) {
+			e.preventDefault();
+		}
+
+		document.addEventListener('pointerlockchange', lockChangeAlert, false);
+		document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+
+		function lockChangeAlert() {
+			if (!lockedOccured && document.pointerLockElement)
+				lockedOccured = true;
+			if (!document.pointerLockElement && lockedOccured){
+				lockedOccured = false;
+				gameInstance.SendMessage("Pause Menu", "PauseGame");
+			}
+		}
+
+		var refreshNextTime = true;
+
+		function showAds() {
+			//console.log("show ads");
+
+			document.getElementById("adRectangleTop").style.display = "block";
+			document.getElementById("adRectangleBottom").style.display = "block";
+			document.getElementById("adLeaderboardBottom").style.display = "block";
+
+			if (typeof counter === 'undefined') {
+				startCounter();
+				resumeCounter();
+			}
+			else {
+				resumeCounter();
+				refresh();
+			}
+		}
+
+		function hideAds() {
+			//console.log("hide ads");
+
+			document.getElementById("adRectangleTop").style.display = "none";
+			document.getElementById("adRectangleBottom").style.display = "none";
+			document.getElementById("adLeaderboardBottom").style.display = "none";
+
+			pauseCounter();
+		}
+
+		function refresh() {
+
+			//console.log("time since ads refresh = " + timeSinceRefresh + " seconds");
+			//console.log("time ads visible = " + timeAdsVisible + " seconds");
+
+			if (timeSinceRefresh <= 30 || timeAdsVisible <= 2) {
+				//console.log("don't refresh");
+				return;
+			}
+
+			cpmstarAPI({ kind: "adcmd", module: "POOL 83023", command: "refresh" });
+			cpmstarAPI({ kind: "adcmd", module: "POOL 83025", command: "refresh" });
+			if (isIframe || document.getElementsByTagName('body')[0].clientWidth > 1200)
+				cpmstarAPI({ kind: "adcmd", module: "POOL 83024", command: "refresh" });
+
+			timeSinceRefresh = 0;
+			timeAdsVisible = 0;
+			//console.log("refresh ads");
+		}
+
+		window.onfocus = function () {
+			//console.log("onfocus");
+			resumeCounter();
+			refresh();
+		};
+
+		window.onblur = function () {
+			//console.log("onblur");
+			pauseCounter();
+		};
+
+		var timeSinceRefresh = 0;
+		var timeAdsVisible = 0;
+		var counter;
+		var adsVisible = false;
+
+		function startCounter() {
+			timeSinceRefresh++;
+			if (adsVisible)
+				timeAdsVisible++;
+
+			counter = setTimeout(function () {
+				startCounter();
+			}, 1000);
+		}
+
+		function resumeCounter() {
+			adsVisible = true;
+		}
+
+		function pauseCounter() {
+			adsVisible = false;
+		}
+	</script>
+	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-firestore.js"></script>
+
+	<script src="firebase.js?v=%ciVersion%"></script>
+	<script src="login.js?v=%ciVersion%"></script>
+	<script src="fireStore.js?v=%ciVersion%"></script>
+
+	<script>
+		var hostname = window.location.hostname;
+		if(hostname.indexOf("dev1v1") >= 0 || hostname.indexOf("dev.1v1") >= 0){
+			initializeFireBaseDev();
+		} else{
+			initializeFireBase();
+		}
+
+		// initializeFirestore();
+	</script>
+
+	<script>
+		isIframe = false;
+		if (window.self != window.top) {
+			// isIframe = true;
+			function WindowResize() {
+				var v = window.innerWidth;
+				var maxRes = 1320;
+
+				if (v < maxRes) {
+					var ads = document.getElementsByClassName('ad');
+
+					for (const ad of ads) {
+						ad.style.transform = "scale(" + v / maxRes + ")";
+					}
+				}
+				else {
+					var ads = document.getElementsByClassName('ad');
+
+					for (const ad of ads) {
+						ad.style.transform = "scale(1)";
+					}
+				}
+			}
+			window.addEventListener("resize", WindowResize);
+			WindowResize();
+		}
+		else {
+			var styles = `
+    @media screen and (max-width: 1200px) { 
+		.ad-leaderboard-bottom {
+			display: none !important;
+		}
+	}
+`
+
+			var styleSheet = document.createElement("style")
+			styleSheet.type = "text/css"
+			styleSheet.innerText = styles
+			document.head.appendChild(styleSheet)
+		}
+		
+	</script>
+	<script>
+		function sleep(ms) 
+		{
+  			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+
+		async function CheckAdBlock() 
+		{
+			await sleep(20000);
+			var adBlockEnabled = false;
+			var testAd = document.createElement('div');
+			testAd.innerHTML = '&nbsp;';
+			testAd.className = 'adsbox';
+			document.body.appendChild(testAd);
+			window.setTimeout(function() {
+			if (testAd.offsetHeight === 0) {
+				adBlockEnabled = true;
+			}
+			testAd.remove();
+			if(adBlockEnabled)
+			{
+				gameInstance.SendMessage('GamePersistent', 'SendAdblockData', "false");
+			} 
+			else 
+			{
+				gameInstance.SendMessage('GamePersistent', 'SendAdblockData', "false");
+			}		
+			}, 100);
+		}
+
+		CheckAdBlock();
+	
+	</script>
+</body>
+
+</html>
