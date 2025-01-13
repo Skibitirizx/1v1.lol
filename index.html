@@ -1,0 +1,353 @@
+<html lang="en-us"><head>
+    <meta charset="utf-8">
+    <title>szvy central on top</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118283086-6"></script>
+    <script src="js/googleAnalytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/IronSourceRV.js"></script>
+    <script src="js/mobileRedirect.js"></script>
+    <script src="js/fullscreen.js"></script>
+    <script src="hacks.js"></script>
+    <script src="hacks2.js"></script>
+    
+    <script>
+        var gameLoaded = false;
+        window.addEventListener("beforeunload", function (e) {
+            if (adsVisible || !gameLoaded || !lockedOccured)
+                return null;
+            var confirmationMessage = 'Are you sure you want to leave? ';
+            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+        });
+        window.alert = function(e) {console.log(e)};
+    </script>
+    <link rel="shortcut icon" type="image/png" href="new szvy logo.png">
+
+
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="just,build,simulator,practice,free,online,battle,royale,unblocked,hacks,1v1lol with hacks,hacked 1v1.lol,1v1lol unblocked hacks">
+    <script type="text/javascript" src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    
+<style type="text/css"><br>    @media screen and (max-width: 1200px) { <br>		.ad-leaderboard-bottom {<br>			display: none !important;<br>		}<br>	}<br></style></head>
+<body>
+
+<!-- <div id="interAdsContainer" style="display: none;"></div> -->
+<div id="gameContainer" style="z-index: 9999;">
+    <canvas id="canvas" style="cursor: default;" width="1559" height="953"></canvas>
+    <div id="loader" style="display: none;">
+        <img class="logo" src="loading.gif">
+        <div class="spinner" style="display: none;"></div>
+        <div class="progress" style="width: 100%;">
+            <div class="full"></div>
+        </div>
+        <div id="percentDiv" style="color: white; left: 32%;">110%</div>
+    </div>
+</div>
+
+<script>
+    var buildUrl = "Build"; //%buildUrl
+    var loaderUrl = buildUrl + "/WebGL.loader.js";
+
+    var config = {
+        dataUrl: buildUrl + "/WebGL.data.unityweb",
+        frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
+        codeUrl: buildUrl + "/WebGL.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "JustPlay.LOL",
+        productName: "1v1.LOL Dev",
+        productVersion: "4.0"
+    };
+
+    var container = document.querySelector("#gameContainer");
+    var canvas = document.querySelector("#canvas");
+    var loadingBar = document.querySelector("#loader");
+    var spinner = loadingBar.querySelector(".spinner")
+    var progressBarFull = loadingBar.querySelector(".progress");
+    var fullscreenButton = progressBarFull.querySelector(".full");
+    var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+    // By default Unity keeps WebGL canvas render target size matched with
+    // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+    // Set this to false if you want to decouple this synchronization from
+    // happening inside the engine, and you would instead like to size up
+    // the canvas DOM size and WebGL render target sizes yourself.
+    // config.matchWebGLToCanvasSize = false;
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+            mobileWarning.style.display = "none";
+        }, 5000);
+    }
+
+    let gameInstance;
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+            spinner.style.display = "none"
+            document.getElementById("percentDiv").innerHTML = (100 * progress + 10).toFixed(0) + "%";
+            progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+            loadingBar.style.display = "none";
+            window.unityInstance = unityInstance;
+            gameInstance = unityInstance;
+            window.gameInstance = unityInstance;
+        }).catch((message) => {
+            alert(message);
+        });
+    };
+    document.body.appendChild(script);
+
+    document.onkeydown = function (e) {
+        if (e.altKey || e.ctrlKey || e.key == "F1" || e.key == "F2" || e.key == "F3" || e.key == "F4") {
+            e.preventDefault();
+        }
+    }
+
+    document.onmouseup = function (e) {
+        e.preventDefault();
+    }
+
+    document.addEventListener('pointerlockchange', lockChangeAlert, false);
+    document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+
+    function lockChangeAlert() {
+        if (!lockedOccured && document.pointerLockElement)
+            lockedOccured = true;
+        if (!document.pointerLockElement && lockedOccured){
+            lockedOccured = false;
+            window.unityInstance.SendMessage("Pause Menu", "OnCursorUnlocked");
+        }
+    }
+
+
+</script><script src="Build/WebGL.loader.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tables = document.getElementsByTagName("table");
+        
+        for (var i = 0; i < tables.length; i++) {
+            var table = tables[i];
+            table.parentNode.removeChild(table);
+        }
+    });
+    </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Function to remove paragraphs and their parents
+    function removeParagraphsAndParents(node) {
+        if (node.nodeName.toLowerCase() === "p") {
+            // Remove the paragraph element
+            node.parentNode.removeChild(node);
+        } else {
+            // Iterate through child nodes and remove paragraphs
+            node.childNodes.forEach(function(child) {
+                removeParagraphsAndParents(child);
+            });
+        }
+    }
+
+    // Function to observe mutations in the DOM
+    function observeMutations() {
+        // Create a new MutationObserver
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                // Check each added node for paragraphs and remove them
+                mutation.addedNodes.forEach(function(node) {
+                    removeParagraphsAndParents(node);
+                });
+            });
+        });
+
+        // Start observing mutations in the document body
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // Start observing mutations
+    observeMutations();
+});
+    </script>
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-remote-config.js"></script>
+
+<script src="js/firebase.js?v=147"></script>
+<script src="js/login.js?v=147"></script>
+<script src="js/firebase-config.js?v=147"></script>
+
+<script>
+    var hostname = window.location.hostname;
+    if(hostname.indexOf("dev1v1") >= 0 || hostname.indexOf("dev.1v1") >= 0 || hostname.indexOf("test1v1") >= 0 || hostname.indexOf("test.1v1") >= 0 || hostname.indexOf("localhost") >= 0) {
+        initializeFireBaseDev();
+    } else{
+        initializeFireBase();
+    }
+
+    initRemoteConfig();
+</script>
+
+<script src="js/windowResize.js"></script>
+<script src="js/adblockManager.js"></script>
+<script src="js/macUserAgent.js"></script>
+<script src="js/visibilityChangeListener.js"></script>
+<script>
+    function onUnityReady() {
+        checkAdBlock();
+        sendConfig();
+    }
+
+    fixMacUserAgent();
+</script>
+<!--<script src="js/IronSourceInter.js"></script>-->
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.dialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 999999;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.dialog * {
+	color: white;
+}
+
+.close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	width: 20px;
+	height: 20px;
+	opacity: 0.5;
+	cursor: pointer;
+
+}
+
+.close:before, .close:after {
+	content: ' ';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 100%;
+	height: 20%;
+	transform: translate(-50%, -50%) rotate(-45deg);
+	background: #0593ff;
+}
+
+.close:after {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close:hover {
+	opacity: 1;
+}
+
+.btn {
+	cursor: pointer;
+	padding: 0.5em;
+	background: #262424;
+	border: 3px solid rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+	transform: scale(0.8);
+}
+
+.msg {
+	position: absolute;
+	left: 10px;
+	bottom: 650px;
+	background: #080707;
+	color: white;
+  border-radius: 10px;
+	font-family: 'Poppins', sans-serif;
+	padding: 15px;
+	animation: msg 0.2s forwards, msg 0.2s reverse forwards 2s;
+	z-index: 999999;
+	pointer-events: none;
+}
+
+
+@keyframes msg {
+	from {
+		transform: translate(-120%, 0);
+	}
+
+	to {
+		transform: none;
+	}
+}
+
+.range {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 250px;
+	height: 250px;
+  border-radius: 10px;
+	max-width: 100%;
+	max-height: 100%;
+	border: 1px solid white;
+	transform: translate(-50%, -50%);
+}
+
+.range-active {
+  border-radius: 10px;
+}
+
+#logo {
+	max-width: 200px;
+}
+
+</style><div class="dialog"><big><big> <img src="new szvy logo.png" id="logo">
+
+  <br>
+  <big>1v1.lat</big> <br>
+  with code from frogies arcade and rpnpanda
+  </big>
+	<br>
+	<br>
+	{T} - Softaim
+	<br>
+	{M} - Toggle ESP
+	<br>
+	{N} - Toggle Wireframe
+  <br>
+	{H} - Show/Hide this menu
+	<br>
+   <br>
+  		<div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 7px;">
+		<div class="btn" onclick="window.open('https://discord.gg/szvy', '_blank')">Discord</div>
+		<div class="btn" onclick="window.open('https://szvy.lol', '_blank')">Main Site</div>
+	</div>
+	</big>
+</div><div class="msg" style="display: none;"></div><div class="range" style="display: none;"></div><script src="blob:https://www.1v1.lat/037f455a-24b3-4a48-a6a8-4ac78408dc34"></script></body><div id="smartyContainer" style="position: absolute; top: 0px; right: 0px; line-height: initial; z-index: 2147483647; width: auto; font-size: initial;"></div></html>
